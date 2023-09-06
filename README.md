@@ -1,4 +1,4 @@
-# NIFoS_Textdata_Analysis
+# From collecting text data To analyzing
 ### Set up
 ---
 
