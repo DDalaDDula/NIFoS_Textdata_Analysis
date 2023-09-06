@@ -1,0 +1,16 @@
+chromedriver_win32/
+*.csv
+*.xlsx
+*.pyc
+*.pkl
+*.zip
+*.json
+*.pt
+*.png
+*.pickle
+_pycache_/
+KoBERT/
+*.whl
+dataset/
+문화/
+치유(복지)/
