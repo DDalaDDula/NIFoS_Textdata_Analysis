@@ -10,3 +10,5 @@ chromedriver_win32/
 *.pickle
 _pycache_/
 crawling_dataset/
+문화/
+치유(복지)/
