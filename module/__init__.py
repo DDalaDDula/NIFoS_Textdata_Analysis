@@ -1,5 +1,5 @@
 import os
-from crawler.func import basic_crawling
+from module.func import basic_crawling
 # 크롤링 함수 정의
 def run_crawler(start_year, finish_year, query_text):  # 시작년도 ~ 최종년도(앞 두 숫자를 빼고 넣음 [ex-2018 ▶ 18]), 검색할 Text
     # 디렉토리 생성 함수
