@@ -18,18 +18,15 @@ def run_crawler(start_year, finish_year, query_text):  # 시작년도 ~ 최종�
         for Mth in range(M1,M2+1): # M1부터 M2까지 차례대로 반복
             month_directory = os.path.join(year_directory, f"{Mth}월")
             create_directory(month_directory)
+            
+            # 모든 월이 날짜가 같지 않아 여러 케이스로 분류.
             if Mth in [1,3,5,7,8,10,12]:
-                crawl_df = basic_crawling(Yr,Mth,31, query_text)
+                NB_DF = basic_crawling(Yr,Mth,31, query_text)
             elif Mth in [4,6,9,11]:
-                crawl_df = basic_crawling(Yr,Mth,30, query_text)
+                NB_DF = basic_crawling(Yr,Mth,30, query_text)
             elif Mth == 2 and Yr%4 == 0: # 윤년을 고려하여 2월 29일인 케이스 추가
-                crawl_df = basic_crawling(Yr,Mth,29, query_text)
+                NB_DF = basic_crawling(Yr,Mth,29, query_text)
             elif Mth == 2 and Yr%4 != 0: # 윤년이 아닌 2월일 경우
-                crawl_df = basic_crawling(Yr,Mth,28, query_text) 
-
-            # 네이버블로그만 남기기 위해 재검사.
-            link_list = crawl_df['url'].to_list()
-            find_naver = [i for i in range(len(link_list)) if 'blog.naver.com' in link_list[i]] 
-
-            NB_DF = crawl_df.iloc[find_naver]
+                NB_DF = basic_crawling(Yr,Mth,28, query_text) 
+            
             NB_DF.to_csv("./crawling_dataset/%s/%s월/%s_%s_%s월.csv"%("20"+str(Yr),Mth,query_text.strip(""""'"""),"20"+str(Yr),Mth), index=False, encoding='UTF-8')

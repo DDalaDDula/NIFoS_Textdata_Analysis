@@ -1,7 +1,10 @@
 import pandas as pd
 import time
+from tqdm import tqdm
+import random
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException, UnexpectedAlertPresentException, TimeoutException
 
 # year=연도(연도에 지정된 숫자! 2018년은 16), month=월(1~12), days=해당 월의 일수
 def basic_crawling(year, month, days, query_text):
@@ -14,7 +17,7 @@ def basic_crawling(year, month, days, query_text):
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument("--single-process")
     chrome_options.add_argument("--disable-dev-shm-usage")
-    chrome_options.add_argument('headless') # 창 숨기기
+    #chrome_options.add_argument('headless') # 창 숨기기
     global driver
     driver = webdriver.Chrome(executable_path ='./crawler/chromedriver_win32/chromedriver.exe',options = chrome_options)
     driver.get("https://www.naver.com/")
@@ -123,7 +126,14 @@ def basic_crawling(year, month, days, query_text):
     crawl_df.drop_duplicates(inplace=True) #중복제거
     crawl_df = crawl_df[::-1] # 역순 크롤링이기 때문에 reverse시킴
     crawl_df = crawl_df.reset_index(drop=True) #인덱스 초기화
-    return crawl_df
+    
+    # 네이버블로그만 남기기 위해 재검사.
+    link_list = crawl_df['url'].to_list()
+    find_naver = [i for i in range(len(link_list)) if 'blog.naver.com' in link_list[i]] 
+    NB_DF = crawl_df.iloc[find_naver]
+    blog_links = NB_DF['url'].to_list()
+    NB_DF['content'] = content_crawling(blog_links)
+    return NB_DF
 
 #셀레니움 스크롤 끝까지 내려도 계속 내리는 페이지라면
 def scroll_first():
@@ -200,3 +210,30 @@ def scroll_next():
     for date in date_time:
         datetime = date.text
         date_list.append(datetime)
+        
+def content_crawling(link):
+    waitsec = random.uniform(4,4.5) # 웹 추적을 피하기 위해 인간처럼 행동하겠다
+    content = []
+    for i in tqdm(link):
+        driver.get(i)
+        driver.implicitly_wait(10)
+        time.sleep(waitsec)
+        try:
+            driver.switch_to.frame("mainFrame")
+            try:
+                a = driver.find_element(By.CSS_SELECTOR,'div.se-main-container').text
+                content.append(a)
+            # NoSuchElement 오류시 예외처리(구버전 블로그에 적용)
+            except NoSuchElementException:
+                a = driver.find_element(By.CSS_SELECTOR,'div#content-area').text
+                content.append(a)
+        except TimeoutException as e:
+            print('시간 초과 오류 : ', e)
+            content.append(None)
+        except UnexpectedAlertPresentException as e:
+            print(e)
+            print('{} 해당 링크는 {} 번째 포스트로, 비공개로 전환되었거나 게시판이 바뀜.'.format(i, link.inde(i)))
+            time.sleep(1.5)
+            driver.switch_to.frame('mainFrame')
+            content.append(None)
+    return content
