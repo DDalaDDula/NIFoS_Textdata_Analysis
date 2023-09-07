@@ -9,8 +9,4 @@ chromedriver_win32/
 *.png
 *.pickle
 _pycache_/
-KoBERT/
-*.whl
-dataset/
-문화/
-치유(복지)/
+crawling_dataset/
