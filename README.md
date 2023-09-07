@@ -4,8 +4,8 @@
 원하는 기간을 설정하고 키워드를 설정하면 일정 기간 내의 키워드를 포함한 블로그 포스트를 전부 크롤링합니다.
 ### Set up
 
-    git clone git@github.com:DDalaDDula/NIFoS_Textdata_Analysis.git
-    cd NIFoS_Textdata_Analysis
+    git clone git@github.com:DDalaDDula/NIFoS_Naverblog_Crawler.git
+    cd NIFoS_Naverblog_Crawler
 
 ---
 ### Environment
