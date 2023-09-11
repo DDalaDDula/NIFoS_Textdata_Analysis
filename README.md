@@ -2,8 +2,8 @@
 텍스트데이터 분석 및 시각화 과정
 ### Set up
 
-    git clone git@github.com:DDalaDDula/NIFoS_Naverblog_Crawler.git
-    cd NIFoS_Naverblog_Crawler
+    git clone git@github.com:DDalaDDula/NIFoS_Textdata_Analysis.git
+    cd NIFoS_Textdata_Analysis
 
 ---
 ### Environment
