@@ -8,7 +8,10 @@ chromedriver_win32/
 *.pt
 *.png
 *.pickle
+*.html
 _pycache_/
 crawling_dataset/
 문화/
 치유(복지)/
+networkx.ipynb
+networkx copy.ipynb
