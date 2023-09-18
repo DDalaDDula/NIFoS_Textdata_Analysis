@@ -8,6 +8,6 @@
 ---
 ### Environment
 
-    conda env create -f NIFOS.yaml   -- 가상환경이 activate 되어있을 때
+    conda env create -f NIFOS.yaml
     conda activate NIFOS
 
