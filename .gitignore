@@ -1,5 +1,6 @@
 chromedriver_win32/
 *.csv
+*.txt
 *.xlsx
 *.pyc
 *.pkl
@@ -15,3 +16,4 @@ crawling_dataset/
 치유(복지)/
 networkx.ipynb
 networkx copy.ipynb
+fast.ipynb
